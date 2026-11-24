@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plataforma B2 SAGA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/leaflet.css">
+<style>
+/* VOICE: técnico y sobrio, como una hoja de datos de ingeniería para expedientes del MARN.
+   IDEA: la ficha técnica del instrumento B2 — franja de título, paneles numerados por paso.
+   PICTURE: el mapa del proyecto con AP/AID/AII es la imagen principal del paso 2.
+   COLOUR and TYPE: cobalto #1240e0, blanco, negro, zonas #eef2ff; Space Grotesk + Inter.
+   LAYOUT: franja estrecha, pasos en pestañas, rejilla densa de campos que se apila en móvil. */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0a0d18);--ink:light-dark(#0b0f19,#e8ecf6);--mut:light-dark(#5b6475,#9aa4b8);--zone:light-dark(#eef2ff,#141a2e);--line:light-dark(#d5dbe8,#273152);--co:#1240e0;--ok:#127a3a;--warn:#b45309}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.1;margin:0}
+.strip{background:var(--co);color:#fff;padding:18px max(4vw,16px)}
+.strip h1{font-size:clamp(24px,3.4vw,36px);text-wrap:balance}
+.strip p{margin:6px 0 0;opacity:.88;max-width:80ch}
+nav{display:flex;gap:4px;padding:0 max(4vw,16px);border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:0;background:var(--bg);z-index:1000}
+nav button{flex:none;border:0;background:none;color:var(--mut);font:600 15px Inter;padding:14px 14px;border-bottom:3px solid transparent;cursor:pointer;min-height:48px}
+nav button[aria-selected=true]{color:var(--co);border-color:var(--co)}
+nav button b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--zone);margin-right:6px;font-size:13px}
+nav button.done b{background:var(--ok);color:#fff}
+main{padding:24px max(4vw,16px) 60px;max-width:1320px;margin:0 auto}
+section[hidden]{display:none}
+fieldset{border:1px solid var(--line);border-radius:6px;padding:16px;margin:0 0 16px;background:var(--zone)}
+legend{font:600 16px "Space Grotesk",Inter,sans-serif;padding:0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px 16px}
+label{display:flex;flex-direction:column;gap:4px;font-size:13.5px;color:var(--mut);font-weight:500}
+.wide{grid-column:1/-1}
+input,select,textarea{font:16px Inter;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:9px 10px;min-height:44px;width:100%}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--co);outline-offset:1px}
+.btn{font:600 15px Inter;border-radius:4px;padding:11px 18px;min-height:44px;border:1px solid var(--co);background:var(--co);color:#fff;cursor:pointer}
+.btn.sec{background:transparent;color:var(--co)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.two{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px}
+@media(max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+#map{height:min(68vh,620px);border:1px solid var(--line);border-radius:6px}
+.panel{border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.panel h3{font-size:17px}
+.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat div{background:var(--zone);border-radius:4px;padding:8px 10px}
+.stat b{display:block;font:600 19px "Space Grotesk",Inter,sans-serif;white-space:nowrap}
+.stat span{font-size:12.5px;color:var(--mut)}
+.msg{font-size:14px;padding:10px 12px;border-radius:4px;background:var(--zone);border-left:3px solid var(--co)}
+.msg.err{border-color:#c0392b}
+.prog{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:8px;margin:16px 0}
+.prog div{border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:14px}
+.prog .run{border-color:var(--co);color:var(--co)}.prog .ok{border-color:var(--ok);color:var(--ok)}
+details.cap{border:1px solid var(--line);border-radius:6px;margin:0 0 10px;background:var(--bg)}
+details.cap summary{cursor:pointer;padding:14px 16px;font:600 17px "Space Grotesk",Inter,sans-serif;list-style:none}
+details.cap summary::before{content:"+";display:inline-block;width:22px;color:var(--co)}
+details.cap[open] summary::before{content:"–"}
+details.cap .in{padding:0 16px 16px}
+.tdr{background:var(--zone);padding:10px 12px;border-radius:4px;font-size:14.5px;font-style:italic}
+.in h4{font:600 15px "Space Grotesk",Inter,sans-serif;margin:16px 0 6px}
+.in p{margin:0 0 8px;max-width:95ch}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;font-size:13.5px;margin:6px 0 12px;width:100%}
+th{background:var(--co);color:#fff;text-align:left;font-weight:600}
+th,td{padding:6px 8px;border:1px solid var(--line);vertical-align:top}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;margin-top:10px}
+.figs figure{margin:0}.figs img{width:100%;border:1px solid var(--line);border-radius:4px;cursor:zoom-in}
+.figs figcaption{font-size:12.5px;color:var(--mut)}
+dialog{border:0;padding:0;max-width:96vw;background:#000}dialog img{max-width:96vw;max-height:92vh;display:block}
+.note{font-size:13.5px;color:var(--mut)}
+@media(max-width:600px){table{font-size:12.5px}.stat{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:no-preference){.prog .run{animation:p 1.2s infinite alternate}@keyframes p{to{opacity:.55}}}
+</style>
+</head>
+<body>
+<header class="strip">
+  <h1>Plataforma B2 SAGA — análisis cartográfico ambiental</h1>
+  <p>Ingrese los datos del proyecto, cargue el polígono y obtenga el análisis de los capítulos 11, 59, 60, 62–66, 71 y 75–77 de los TdR B2 del MARN, con los mapas de la carpeta MAPAS B2 SAGA y su metodología, listo para descargar en Word.</p>
+</header>
+<nav role="tablist">
+  <button role="tab" data-s="1" aria-selected="true"><b>1</b>Datos del proyecto</button>
+  <button role="tab" data-s="2" aria-selected="false"><b>2</b>Polígono y áreas de influencia</button>
+  <button role="tab" data-s="3" aria-selected="false"><b>3</b>Análisis por capítulo</button>
+  <button role="tab" data-s="4" aria-selected="false"><b>4</b>Informe Word</button>
+</nav>
+<main>
+<section id="s1">
+<form id="f" autocomplete="off">
+<fieldset><legend>Identificación</legend><div class="grid">
+  <label class="wide">Nombre del proyecto<input name="nombre" required></label>
+  <label>Proponente<input name="proponente"></label>
+  <label>Representante legal<input name="representante"></label>
+  <label>Consultor / empresa consultora<input name="consultor"></label>
+  <label class="wide">Dirección<input name="direccion"></label>
+  <label class="wide">Actividad y descripción breve<textarea name="actividad"></textarea></label>
+  <label>Fases evaluadas<select name="fase"><option>Construcción y operación</option><option>Operación</option><option>Construcción, operación y cierre</option></select></label>
+  <label>Uso actual del terreno<input name="uso_actual" placeholder="baldío, cultivo, construido…"></label>
+</div></fieldset>
+<fieldset><legend>Dimensiones (m²)</legend><div class="grid">
+  <label>Área del terreno<input name="area_terreno" type="number" step="any" min="0"></label>
+  <label>Área de ocupación (huella)<input name="area_ocupacion" type="number" step="any" min="0"></label>
+  <label>Área de construcción total<input name="area_construccion" type="number" step="any" min="0"></label>
+  <label>Área impermeabilizada (techos y pavimentos)<input name="area_impermeable" type="number" step="any" min="0"></label>
+  <label>Número de niveles<input name="niveles" type="number" min="0"></label>
+  <label>Empleados en construcción<input name="empleados_con" type="number" min="0"></label>
+  <label>Empleados en operación<input name="empleados_op" type="number" min="0"></label>
+  <label>Horario de trabajo<input name="horario" placeholder="L–V 7:00–17:00"></label>
+</div></fieldset>
+<fieldset><legend>Terreno (capítulo 11)</legend><div class="grid">
+  <label>Pendiente máxima del terreno (%)<input name="pend_max" type="number" step="any" min="0"></label>
+  <label>Volumen de corte (m³)<input name="corte" type="number" step="any" min="0"></label>
+  <label>Volumen de relleno (m³)<input name="relleno" type="number" step="any" min="0"></label>
+</div></fieldset>
+<fieldset><legend>Agua (capítulos 59, 60 y 62)</legend><div class="grid">
+  <label>Fuente de agua<select name="agua_fuente"><option value="">—</option><option>red municipal</option><option>pozo propio</option><option>proveedor privado (cisterna)</option><option>captación de agua de lluvia</option></select></label>
+  <label>Demanda de agua (m³/día)<input name="agua_demanda" type="number" step="any" min="0"></label>
+  <label>Tipo de aguas residuales<select name="ar_tipo"><option value="ordinarias">Ordinarias</option><option value="especiales">Especiales</option><option value="ambas">Ordinarias y especiales</option></select></label>
+  <label>Caudal de aguas residuales (m³/día)<input name="ar_caudal" type="number" step="any" min="0" placeholder="vacío = 80 % de la demanda"></label>
+  <label>Tratamiento<select name="ar_tratamiento"><option value="municipal">Conexión a alcantarillado municipal</option><option value="planta">Planta de tratamiento propia</option><option value="fosa">Fosa séptica + pozo de absorción</option><option value="otro">Otro</option></select></label>
+  <label>Punto de descarga<input name="descarga_tipo" placeholder="alcantarillado municipal, río X, pozo de absorción…"></label>
+  <label>Latitud de la descarga (opcional)<input name="descarga_lat" type="number" step="any"></label>
+  <label>Longitud de la descarga (opcional)<input name="descarga_lon" type="number" step="any"></label>
+  <label class="wide">Manejo de aguas pluviales<input name="pluvial" placeholder="canales y tragantes a pozos de absorción; excedente a drenaje municipal pluvial"></label>
+</div></fieldset>
+<fieldset><legend>Aire, ruido y entorno (capítulos 62 y 75)</legend><div class="grid">
+  <label class="wide">Fuentes de emisiones<input name="emisiones"></label>
+  <label class="wide">Fuentes de ruido y vibraciones<input name="ruido"></label>
+  <label>Colindancia norte<input name="col_n"></label><label>Colindancia sur<input name="col_s"></label>
+  <label>Colindancia este<input name="col_e"></label><label>Colindancia oeste<input name="col_o"></label>
+</div></fieldset>
+<div class="row"><button type="submit" class="btn">Continuar al polígono</button><span class="note">Los datos se guardan en este navegador.</span></div>
+</form>
+</section>
+
+<section id="s2" hidden>
+<div class="two">
+  <div id="map" aria-label="Mapa del proyecto"></div>
+  <div class="panel">
+    <h3>Cargar el polígono del AP</h3>
+    <label>Archivo KML, KMZ o GeoJSON<input type="file" id="file" accept=".kml,.kmz,.geojson,.json"></label>
+    <label>…o pegue coordenadas (un vértice por línea)<textarea id="coords" placeholder="X Y en GTM (m)   o   latitud, longitud"></textarea></label>
+    <div class="row"><select id="crs" style="width:auto"><option value="auto">Detectar sistema</option><option value="gtm">GTM (m)</option><option value="wgs">WGS84 (grados)</option></select><button class="btn sec" id="bCoords" type="button">Usar coordenadas</button></div>
+    <div class="row"><button class="btn sec" id="bDraw" type="button">Dibujar en el mapa</button><button class="btn sec" id="bEnd" type="button" hidden>Cerrar polígono</button></div>
+    <h3>Áreas de influencia</h3>
+    <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+      <label>AID (m desde el AP)<input id="aid" type="number" value="300" min="10"></label>
+      <label>AII (m desde el AP)<input id="aii" type="number" value="1000" min="20"></label>
+    </div>
+    <label>Criterio del AID (opcional)<textarea id="caid" placeholder="Por defecto: alcance de ruido, polvo, tránsito y escorrentía"></textarea></label>
+    <label>Criterio del AII (opcional)<textarea id="caii"></textarea></label>
+    <div class="stat" id="stat"><div><b>—</b><span>AP (ha)</span></div><div><b>—</b><span>AID (ha)</span></div><div><b>—</b><span>AII (ha)</span></div></div>
+    <label>Lámina de consulta sobre el mapa<select id="sheet"><option value="">Ninguna</option></select></label>
+    <div id="m2" class="msg">Cargue o dibuje el polígono del terreno.</div>
+    <button class="btn" id="bGo" type="button" disabled>Analizar capítulos</button>
+  </div>
+</div>
+</section>
+
+<section id="s3" hidden>
+  <div class="row"><button class="btn" id="bRun" type="button">Ejecutar análisis</button><span class="note" id="m3">El análisis descarga solo las teselas del entorno del proyecto; tarda entre 20 y 60 segundos.</span></div>
+  <div class="prog" id="prog"></div>
+  <div id="res"></div>
+</section>
+
+<section id="s4" hidden>
+  <fieldset><legend>Descargas</legend>
+  <p>El informe Word incluye, por capítulo: el requerimiento de los TdR, el análisis, los cuadros, los mapas con el AP, AID y AII superpuestos, la metodología de cada mapa aplicada al proyecto y las fuentes.</p>
+  <div class="row"><button class="btn" id="bDoc" type="button" disabled>Descargar informe Word (.docx)</button><button class="btn sec" id="bKml" type="button" disabled>Descargar KML (AP, AID, AII)</button></div>
+  <p id="m4" class="note"></p>
+  </fieldset>
+</section>
+</main>
+<dialog id="dlg"><img alt=""></dialog>
+<script src="lib/leaflet.js"></script><script src="lib/proj4.js"></script><script src="lib/turf.min.js"></script><script src="lib/jszip.min.js"></script><script src="lib/docx.js"></script>
+<script src="js/kb.js"></script><script src="js/geo.js"></script><script src="js/render.js"></script><script src="js/analisis.js"></script><script src="js/report.js"></script><script src="js/app.js"></script>
+</body>
+</html>

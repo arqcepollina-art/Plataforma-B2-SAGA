@@ -1,0 +1,374 @@
+{
+ "division_politica_administrativa": {
+  "file": "m/division_politica_administrativa.jpg",
+  "bounds": [
+   -10407343.920510655,
+   1316529.695584137,
+   -9734526.466112714,
+   2192455.412471563
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "001-Mapa_division_politica_administrativa-scaled_modified.tif"
+ },
+ "cuencas_hidrograficas": {
+  "file": "m/cuencas_hidrograficas.jpg",
+  "bounds": [
+   -10407374.535120847,
+   1316544.2282049651,
+   -9734583.82981959,
+   2192435.1210527704
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "001Mapa_cuencas_hidrograficas-1-scaled_modified.tif"
+ },
+ "hipsometrico": {
+  "file": "m/hipsometrico.jpg",
+  "bounds": [
+   -10407354.508983953,
+   1316517.2752694986,
+   -9734530.345277257,
+   2192451.7268531527
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "001Mapa_hipsometrico-1-scaled_modified.tif"
+ },
+ "zonas_de_vida": {
+  "file": "m/zonas_de_vida.jpg",
+  "bounds": [
+   -10407349.470267732,
+   1316496.110318663,
+   -9734529.791127777,
+   2192424.723547036
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "001Mapa_zonas_de_vida-1-scaled_modified.tif"
+ },
+ "de_areas_protegidas_2023": {
+  "file": "m/de_areas_protegidas_2023.jpg",
+  "bounds": [
+   -10406843.136911882,
+   1316124.7236571198,
+   -9734943.220283657,
+   2192085.6611810676
+  ],
+  "w": 1969,
+  "h": 2567,
+  "src": "002-Mapa-de-areas-protegidas_2023-scaled_modified.tif"
+ },
+ "hidrografia": {
+  "file": "m/hidrografia.jpg",
+  "bounds": [
+   -10407357.810913289,
+   1316512.1110595518,
+   -9734546.80833954,
+   2192429.428464038
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "002Mapa_hidrografia-1-scaled_modified.tif"
+ },
+ "captacion_regulacion_hidrica": {
+  "file": "m/captacion_regulacion_hidrica.jpg",
+  "bounds": [
+   -10407356.729500366,
+   1316527.8231030698,
+   -9734576.611060249,
+   2192404.93315753
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "003Mapa_captacion_regulacion_hidrica-1-scaled_modified.tif"
+ },
+ "fisiografico": {
+  "file": "m/fisiografico.jpg",
+  "bounds": [
+   -10407350.549858307,
+   1316534.0795293592,
+   -9734520.989091666,
+   2192475.5574224093
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "003Mapa_fisiografico-1-scaled_modified.tif"
+ },
+ "intensidad_de_uso": {
+  "file": "m/intensidad_de_uso.jpg",
+  "bounds": [
+   -10407345.474447347,
+   1316526.8469750306,
+   -9734530.67401034,
+   2192449.108731174
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "004Mapa_intensidad_de_uso-1-scaled_modified.tif"
+ },
+ "taxonomico": {
+  "file": "m/taxonomico.jpg",
+  "bounds": [
+   -10407305.417185625,
+   1316611.1922842981,
+   -9734686.396136267,
+   2192339.972839506
+  ],
+  "w": 2540,
+  "h": 3307,
+  "src": "004Mapa_taxonomico-1-scaled_modified.tif"
+ },
+ "disponibilidad_hidrica_microcuenca": {
+  "file": "m/disponibilidad_hidrica_microcuenca.jpg",
+  "bounds": [
+   -10407333.721302278,
+   1316594.4758610823,
+   -9734889.57076651,
+   2192478.58259955
+  ],
+  "w": 1970,
+  "h": 2566,
+  "src": "005Mapa_disponibilidad_hidrica_microcuenca-1-scaled_modified.tif"
+ },
+ "erosion_potencial": {
+  "file": "m/erosion_potencial.jpg",
+  "bounds": [
+   -10407339.920011643,
+   1316496.7778849346,
+   -9734523.908375574,
+   2192420.6164735463
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "005Mapa_erosion_potencial-1-scaled_modified.tif"
+ },
+ "orografico": {
+  "file": "m/orografico.jpg",
+  "bounds": [
+   -10420856.57103561,
+   1302547.5433936217,
+   -9724569.905972,
+   2209840.8780221944
+  ],
+  "w": 1970,
+  "h": 2567,
+  "src": "005Mapa_orografico-1-scaled_modified.tif"
+ },
+ "capacidad_de_uso_de_la_tierra": {
+  "file": "m/capacidad_de_uso_de_la_tierra.jpg",
+  "bounds": [
+   -10412526.545434546,
+   1313006.288818057,
+   -9730376.155073788,
+   2195849.2765426934
+  ],
+  "w": 2002,
+  "h": 2591,
+  "src": "006Mapa_capacidad_de_uso_de_la_tierra-1-scaled_modified.tif"
+ },
+ "densidad_poblacional": {
+  "file": "m/densidad_poblacional.jpg",
+  "bounds": [
+   -10407336.468148405,
+   1316513.8374086763,
+   -9734540.238785502,
+   2192411.9219064997
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "006Mapa_densidad_poblacional-1-scaled_modified.tif"
+ },
+ "precipitacion_anual_al_2020": {
+  "file": "m/precipitacion_anual_al_2020.jpg",
+  "bounds": [
+   -10406839.794741903,
+   1316131.8962928602,
+   -9734929.470357668,
+   2192106.4024860207
+  ],
+  "w": 1969,
+  "h": 2567,
+  "src": "006Mapa_precipitacion_anual_al_2020-scaled_modified.tif"
+ },
+ "temperatura_promedio_anual_2020": {
+  "file": "m/temperatura_promedio_anual_2020.jpg",
+  "bounds": [
+   -10406871.19039382,
+   1316164.0897693536,
+   -9734687.285244362,
+   2192050.4270884697
+  ],
+  "w": 1970,
+  "h": 2567,
+  "src": "007Mapa_temperatura_promedio_anual_2020-scaled_modified.tif"
+ },
+ "comunidades_linguisticas": {
+  "file": "m/comunidades_linguisticas.jpg",
+  "bounds": [
+   -10407331.311780147,
+   1316506.4931193483,
+   -9734538.032080652,
+   2192400.7375175757
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "008Mapa_comunidades_linguisticas-1-scaled_modified.tif"
+ },
+ "sitios_arqueologicos": {
+  "file": "m/sitios_arqueologicos.jpg",
+  "bounds": [
+   -10407333.17851161,
+   1316503.508618364,
+   -9734523.04984224,
+   2192419.688306646
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "009Mapa_sitios_arqueologicos-1-scaled_modified.tif"
+ },
+ "migracion2018": {
+  "file": "m/migracion2018.jpg",
+  "bounds": [
+   -10407333.277524797,
+   1316504.5583590842,
+   -9734531.523974169,
+   2192409.8346710643
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "010Mapa_Migracion2018-1-scaled_modified.tif"
+ },
+ "dinamica_forestal2016_2020": {
+  "file": "m/dinamica_forestal2016_2020.jpg",
+  "bounds": [
+   -10406831.962194039,
+   1316149.2754607352,
+   -9734973.953298373,
+   2192055.577560874
+  ],
+  "w": 1969,
+  "h": 2567,
+  "src": "012Mapa_dinamica_forestal2016-2020-1-scaled-1-scaled_modified.tif"
+ },
+ "pobreza_general_2018": {
+  "file": "m/pobreza_general_2018.jpg",
+  "bounds": [
+   -10407338.842490517,
+   1316514.7961828196,
+   -9734540.887609635,
+   2192415.1270931913
+  ],
+  "w": 1971,
+  "h": 2566,
+  "src": "013Mapa_pobreza_general_2018-1-scaled-1-scaled_modified.tif"
+ },
+ "clima_thornthwaite_12x18_ws": {
+  "file": "m/clima_thornthwaite_12x18_ws.jpg",
+  "bounds": [
+   -10315069.13757887,
+   1272736.7374852598,
+   -9776596.66539602,
+   2082806.1810238026
+  ],
+  "w": 2395,
+  "h": 3603,
+  "src": "CLIMA THORNTHWAITE_12X18_WS_modified.tif"
+ },
+ "inundaciones_uie": {
+  "file": "m/inundaciones_uie.jpg",
+  "bounds": [
+   -10406892.380990721,
+   1316148.294400503,
+   -9734686.685324946,
+   2192063.0257578865
+  ],
+  "w": 1970,
+  "h": 2567,
+  "src": "Inundaciones_UIE-1-scaled_modified.tif"
+ },
+ "deslizamientos_01092023": {
+  "file": "m/deslizamientos_01092023.jpg",
+  "bounds": [
+   -10406859.562056458,
+   1316132.1127977925,
+   -9734973.031017013,
+   2192075.5994297136
+  ],
+  "w": 1969,
+  "h": 2567,
+  "src": "Mapa-deslizamientos-01092023-scaled_modified.tif"
+ },
+ "volcanes_lahares": {
+  "file": "m/volcanes_lahares.jpg",
+  "bounds": [
+   -10314265.894724235,
+   1338641.97691702,
+   -9771029.885609696,
+   2160941.3572112117
+  ],
+  "w": 985,
+  "h": 1491,
+  "src": "volcanes lahares_modified.tif"
+ },
+ "volcanes_lava": {
+  "file": "m/volcanes_lava.jpg",
+  "bounds": [
+   -10314270.153798409,
+   1338634.3630122098,
+   -9771024.170181535,
+   2160948.8417662797
+  ],
+  "w": 985,
+  "h": 1491,
+  "src": "volcanes lava_modified.tif"
+ },
+ "volcanes_piroclasticos": {
+  "file": "m/volcanes_piroclasticos.jpg",
+  "bounds": [
+   -10314274.970119644,
+   1338638.0672621732,
+   -9771029.610093683,
+   2160951.6020831973
+  ],
+  "w": 985,
+  "h": 1491,
+  "src": "volcanes piroclasticos_modified.tif"
+ },
+ "volcanes_tefra": {
+  "file": "m/volcanes_tefra.jpg",
+  "bounds": [
+   -10314270.982822128,
+   1338637.8116617056,
+   -9771025.702872,
+   2160951.225271492
+  ],
+  "w": 985,
+  "h": 1491,
+  "src": "volcanes tefra_modified.tif"
+ },
+ "zonas_sismicas": {
+  "file": "m/zonas_sismicas.jpg",
+  "bounds": [
+   -10316606.549555367,
+   1316834.7172423562,
+   -9772140.328467404,
+   2138493.761414576
+  ],
+  "w": 988,
+  "h": 1491,
+  "src": "zonas sismicas_modified.tif"
+ },
+ "mapa_pot_municipio_gtm": {
+  "file": "m/mapa_pot_municipio_gtm.jpg",
+  "bounds": [
+   -10086235.98534749,
+   1635563.4722704606,
+   -10058392.721124746,
+   1656632.3708675818
+  ],
+  "w": 4480,
+  "h": 3390,
+  "src": "MAPA_POT_MUNICIPIO_GTM.tif"
+ }
+}
